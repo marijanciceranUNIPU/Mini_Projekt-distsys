@@ -1,7 +1,7 @@
-import aiohttp
 import aiosqlite
 import pandas as pd
 from aiohttp import web
+from OuterFunc import RowFetcher
 
 routes = web.RouteTableDef()
 
@@ -26,7 +26,8 @@ async def json_data(request):
                                         )
                                     )
                                     await db.commit()
-                            print("Podaci uspješno dodani u bazu.")
+                            data = await RowFetcher(db)
+                            print("Podaci uspješno dodani u bazu.", "data: ", data)
                         except Exception as e:
                             print("Dogodila se greška: ", e)
                         pass
