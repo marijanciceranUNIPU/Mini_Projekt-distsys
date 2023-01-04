@@ -20,3 +20,9 @@ async def WorkerTokenizer(URL, data):
 			async with session.post(URL, json = data[index]) as response:
 				WTResponse = await response.json()
 	return WTResponse
+
+async def ForwardToService4(data):
+	async with aiohttp.ClientSession(connector = aiohttp.TCPConnector(ssl = False)) as session:
+		async with session.post("http://4.servis:8084/gatherData", json = data) as response:
+			Service4Response = await response.json()
+	return Service4Response
