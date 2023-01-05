@@ -22,7 +22,8 @@ async def json_data(request):
                                         (
                                             row.get["repo_name"].rsplit("/", 1)[0],
                                             "https://github.com/" + row.get("repo_name") + ".com",
-                                            row.get("path").rsplit("/", 1)[1]
+                                            row.get("path").rsplit("/", 1)[1],
+                                            row.get("content")
                                         )
                                     )
                                     await db.commit()
