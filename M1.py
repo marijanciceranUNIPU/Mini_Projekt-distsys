@@ -15,15 +15,13 @@ async def first_service(request):
 			Res = await asyncio.gather(task)
 			whole_data = await Res[0].json()
 			Dictionary = [
-				{
-					"id": item[0], 
-					"username": item[1], 
-					"ghublink": item[2], 
-					"filename": item[3], 
-					"content": item[4] 
-                } 
-                for item in whole_data.get("data")
-			]
+       		{
+				"id": item[0], 
+				"username": item[1], 
+				"ghlink": item[2],
+				"content": item[3] 
+            } 
+            for item in whole_data.get("data")]
    
 			firstWT = await WorkerTokenizer("http://127.0.0.1:8082/", Dictionary)
 			secondWT = await WorkerTokenizer("http://127.0.0.1:8083/", Dictionary)

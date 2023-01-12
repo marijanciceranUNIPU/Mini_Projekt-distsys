@@ -18,9 +18,9 @@ async def fourth_service(request):
 				async with aiofiles.open("files/%s.txt"%(item.get("username")), "w") as writer:
 					await writer.write(item.get("content"))
 			Code.clear()
-		return web.json_response({"name": "service4", "status": "OK"}, status = 200)
+		return web.json_response({"name": "Service 4", "status": "OK"}, status = 200)
 	except Exception as e:
-		return web.json_response({"name": "service4", "error": str(e)}, status = 500)
+		return web.json_response({"name": "Service 4", "error": str(e)}, status = 500)
 
 app = web.Application()
 app.router.add_routes(routes)

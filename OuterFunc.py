@@ -26,3 +26,23 @@ async def ForwardToService4(data):
 		async with session.post("http://4.servis:8084/gatherData", json = data) as response:
 			Service4Response = await response.json()
 	return Service4Response
+
+async def AddToDB():
+	try:
+		df = pd.read_json('FakeDataset.json', lines = True)
+		async with aiosqlite.connect("dbase.db") as db:
+			for index, row in df.tail(10000).iterrows():
+				await db.execute(
+					"INSERT INTO mini_projekt_db (username, ghublink, filename, content) VALUES (?, ?, ?, ?)",
+					(
+						row.get("repo_name").split("/", 1)[0],
+      					"https://github.com/" + row.get("repo_name") + ".com",
+                        row.get("path").rsplit("/", 1)[1],
+                        row.get("content")
+					)
+				)
+				await db.commit()
+		print("Podaci uspješno dodani u bazu.")
+	except Exception as e:
+		print("Dogodila se greška: ", e)
+	pass
